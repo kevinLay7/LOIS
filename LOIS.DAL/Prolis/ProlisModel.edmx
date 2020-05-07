@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="35" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="35" />
+          <Property Name="City" Type="nvarchar" MaxLength="35" />
+          <Property Name="State" Type="nvarchar" MaxLength="35" />
+          <Property Name="Zip" Type="nchar" MaxLength="25" />
+          <Property Name="Country" Type="nvarchar" MaxLength="35" />
+        </EntityType>
+        <EntityType Name="Client_Patient">
+          <Key>
+            <PropertyRef Name="Provider_ID" />
+            <PropertyRef Name="Patient_ID" />
+          </Key>
+          <Property Name="Provider_ID" Type="bigint" Nullable="false" />
+          <Property Name="Patient_ID" Type="bigint" Nullable="false" />
+          <Property Name="EMRNo" Type="nvarchar" MaxLength="25" />
+          <Property Name="Room" Type="nvarchar" MaxLength="25" />
+          <Property Name="ClientUser_ID" Type="bigint" />
+          <Property Name="AdmitDate" Type="datetime" />
+          <Property Name="DischargeDate" Type="datetime" />
+          <Property Name="TestDays" Type="nvarchar" MaxLength="100" />
+          <Property Name="AttendingProvider_ID" Type="bigint" />
+          <Property Name="BillingType_ID" Type="tinyint" />
+          <Property Name="Phleb_Loc" Type="tinyint" />
+          <Property Name="Shift" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="OrderDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="InfiniteTimed" Type="bit" Nullable="false" />
+          <Property Name="TestDays" Type="nvarchar" MaxLength="100" />
+          <Property Name="Agency_ID" Type="bigint" />
+          <Property Name="OrderingProvider_ID" Type="bigint" />
+          <Property Name="AttendingProvider_ID" Type="bigint" />
+          <Property Name="BillingType_ID" Type="tinyint" />
+          <Property Name="Patient_ID" Type="bigint" />
+          <Property Name="EntrySource_ID" Type="tinyint" />
+          <Property Name="Phleb_Loc" Type="tinyint" Nullable="false" />
+          <Property Name="WorkCmnt" Type="nvarchar" MaxLength="960" />
+          <Property Name="Fasting" Type="bit" Nullable="false" />
+          <Property Name="Created_By" Type="bigint" />
+          <Property Name="CompleteDate" Type="smalldatetime" />
+          <Property Name="LastEdited_On" Type="smalldatetime" />
+          <Property Name="Edited_By" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Patients">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="35" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="35" />
+          <Property Name="Sex" Type="char" MaxLength="1" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="Ethnicity" Type="nchar" MaxLength="10" />
+          <Property Name="Race_ID" Type="int" />
+          <Property Name="SSN" Type="nchar" MaxLength="9" />
+          <Property Name="IsAlive" Type="bit" />
+          <Property Name="DeathDate" Type="smalldatetime" />
+          <Property Name="Address_ID" Type="bigint" />
+          <Property Name="HomePhone" Type="nchar" MaxLength="13" />
+          <Property Name="WorkPhone" Type="nchar" MaxLength="13" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="SecretQ" Type="nvarchar" MaxLength="50" />
+          <Property Name="SecretA" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nchar" MaxLength="13" />
+          <Property Name="Cell" Type="nchar" MaxLength="13" />
+          <Property Name="Employer_ID" Type="bigint" />
+          <Property Name="Note" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Payers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="FacilityType_ID" Type="tinyint" Nullable="false" />
+          <Property Name="PayerName" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="IsHealthcare" Type="bit" Nullable="false" />
+          <Property Name="DocFile" Type="nvarchar" MaxLength="100" />
+          <Property Name="FederalID" Type="nchar" MaxLength="9" />
+          <Property Name="NPI" Type="nvarchar" MaxLength="20" />
+          <Property Name="PartNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="PriceLevel" Type="tinyint" />
+          <Property Name="ContractFrom" Type="smalldatetime" />
+          <Property Name="ContractTo" Type="smalldatetime" />
+          <Property Name="PayerCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="Address_ID" Type="bigint" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="60" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccountNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsPar" Type="bit" />
+          <Property Name="IsECC" Type="bit" />
+          <Property Name="CommDLL" Type="nvarchar" MaxLength="50" />
+          <Property Name="Website" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastEditedOn" Type="smalldatetime" />
+          <Property Name="EditedBy" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Requisitions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="RequisitionNo" Type="nvarchar" MaxLength="25" />
+          <Property Name="EMRNo" Type="nvarchar" MaxLength="25" />
+          <Property Name="Room" Type="nvarchar" MaxLength="25" />
+          <Property Name="Shift" Type="smallint" Nullable="false" />
+          <Property Name="Verbal" Type="smallint" Nullable="false" />
+          <Property Name="AccessionDate" Type="smalldatetime" />
+          <Property Name="SpecimenType" Type="tinyint" Nullable="false" />
+          <Property Name="LabDraw" Type="bit" Nullable="false" />
+          <Property Name="DrawnDate" Type="smalldatetime" />
+          <Property Name="SPNote" Type="nvarchar" MaxLength="380" />
+          <Property Name="AccessionedBy" Type="bigint" />
+          <Property Name="AccessionLoc_ID" Type="int" />
+          <Property Name="AnalysisStage_ID" Type="tinyint" />
+          <Property Name="SalesPerson_ID" Type="bigint" />
+          <Property Name="Fasting" Type="bit" />
+          <Property Name="Received" Type="bit" Nullable="false" />
+          <Property Name="ReceivedTime" Type="datetime" />
+          <Property Name="ResultHistory" Type="bit" Nullable="false" />
+          <Property Name="Reported" Type="bit" />
+          <Property Name="ReportedOn" Type="smalldatetime" />
+          <Property Name="Reported_Initial" Type="datetime" />
+          <Property Name="Reported_Final" Type="datetime" />
+          <Property Name="RPT_Status" Type="nvarchar" MaxLength="40" />
+          <Property Name="OrderingProvider_ID" Type="bigint" />
+          <Property Name="AttendingProvider_ID" Type="bigint" />
+          <Property Name="Patient_ID" Type="bigint" />
+          <Property Name="IsGratis" Type="bit" />
+          <Property Name="BillingType_ID" Type="smallint" />
+          <Property Name="PrimePayer_ID" Type="bigint" />
+          <Property Name="SecondPayer_ID" Type="bigint" />
+          <Property Name="Scrubbed" Type="bit" Nullable="false" />
+          <Property Name="Payment_ID" Type="bigint" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="960" />
+          <Property Name="WorkCmnt" Type="nvarchar" MaxLength="960" />
+          <Property Name="PaymentAmount" Type="real" />
+          <Property Name="Outreach_Publish" Type="bit" Nullable="false" />
+          <Property Name="ProlisOn_Publish" Type="bit" Nullable="false" />
+          <Property Name="Fax_Publish" Type="bit" Nullable="false" />
+          <Property Name="InHouse" Type="bit" Nullable="false" />
+          <Property Name="Director_ID" Type="bigint" />
+          <Property Name="InEditReason" Type="nvarchar" MaxLength="250" />
+          <Property Name="LastEditedOn" Type="smalldatetime" />
+          <Property Name="EditedBy" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Specimens">
+          <Key>
+            <PropertyRef Name="Accession_ID" />
+            <PropertyRef Name="Source_ID" />
+          </Key>
+          <Property Name="Accession_ID" Type="bigint" Nullable="false" />
+          <Property Name="Source_ID" Type="smallint" Nullable="false" />
+          <Property Name="SourceNo" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="SourceQuantity" Type="real" />
+          <Property Name="SourceDate" Type="datetime" />
+          <Property Name="SourceTemp" Type="nvarchar" MaxLength="25" />
+          <Property Name="IsReadyToUse" Type="bit" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityContainer Name="LabaseModelStoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client_Patient" EntityType="Self.Client_Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payers" EntityType="Self.Payers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requisitions" EntityType="Self.Requisitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specimens" EntityType="Self.Specimens" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Address1" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Client_Patient">
+          <Key>
+            <PropertyRef Name="Provider_ID" />
+            <PropertyRef Name="Patient_ID" />
+          </Key>
+          <Property Name="Provider_ID" Type="Int64" Nullable="false" />
+          <Property Name="Patient_ID" Type="Int64" Nullable="false" />
+          <Property Name="EMRNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Room" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ClientUser_ID" Type="Int64" />
+          <Property Name="AdmitDate" Type="DateTime" Precision="3" />
+          <Property Name="DischargeDate" Type="DateTime" Precision="3" />
+          <Property Name="TestDays" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AttendingProvider_ID" Type="Int64" />
+          <Property Name="BillingType_ID" Type="Byte" />
+          <Property Name="Phleb_Loc" Type="Byte" />
+          <Property Name="Shift" Type="Byte" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="InfiniteTimed" Type="Boolean" Nullable="false" />
+          <Property Name="TestDays" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Agency_ID" Type="Int64" />
+          <Property Name="OrderingProvider_ID" Type="Int64" />
+          <Property Name="AttendingProvider_ID" Type="Int64" />
+          <Property Name="BillingType_ID" Type="Byte" />
+          <Property Name="Patient_ID" Type="Int64" />
+          <Property Name="EntrySource_ID" Type="Byte" />
+          <Property Name="Phleb_Loc" Type="Byte" Nullable="false" />
+          <Property Name="WorkCmnt" Type="String" MaxLength="960" FixedLength="false" Unicode="true" />
+          <Property Name="Fasting" Type="Boolean" Nullable="false" />
+          <Property Name="Created_By" Type="Int64" />
+          <Property Name="CompleteDate" Type="DateTime" Precision="0" />
+          <Property Name="LastEdited_On" Type="DateTime" Precision="0" />
+          <Property Name="Edited_By" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Payer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="FacilityType_ID" Type="Byte" Nullable="false" />
+          <Property Name="PayerName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="IsHealthcare" Type="Boolean" Nullable="false" />
+          <Property Name="DocFile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FederalID" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
+          <Property Name="NPI" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PartNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PriceLevel" Type="Byte" />
+          <Property Name="ContractFrom" Type="DateTime" Precision="0" />
+          <Property Name="ContractTo" Type="DateTime" Precision="0" />
+          <Property Name="PayerCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address_ID" Type="Int64" />
+          <Property Name="Contact" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsPar" Type="Boolean" />
+          <Property Name="IsECC" Type="Boolean" />
+          <Property Name="CommDLL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditedOn" Type="DateTime" Precision="0" />
+          <Property Name="EditedBy" Type="Int64" />
+        </EntityType>
+        <EntityType Name="Requisition">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="RequisitionNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="EMRNo" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Room" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Shift" Type="Int16" Nullable="false" />
+          <Property Name="Verbal" Type="Int16" Nullable="false" />
+          <Property Name="AccessionDate" Type="DateTime" Precision="0" />
+          <Property Name="SpecimenType" Type="Byte" Nullable="false" />
+          <Property Name="LabDraw" Type="Boolean" Nullable="false" />
+          <Property Name="DrawnDate" Type="DateTime" Precision="0" />
+          <Property Name="SPNote" Type="String" MaxLength="380" FixedLength="false" Unicode="true" />
+          <Property Name="AccessionedBy" Type="Int64" />
+          <Property Name="AccessionLoc_ID" Type="Int32" />
+          <Property Name="AnalysisStage_ID" Type="Byte" />
+          <Property Name="SalesPerson_ID" Type="Int64" />
+          <Property Name="Fasting" Type="Boolean" />
+          <Property Name="Received" Type="Boolean" Nullable="false" />
+          <Property Name="ReceivedTime" Type="DateTime" Precision="3" />
+          <Property Name="ResultHistory" Type="Boolean" Nullable="false" />
+          <Property Name="Reported" Type="Boolean" />
+          <Property Name="ReportedOn" Type="DateTime" Precision="0" />
+          <Property Name="Reported_Initial" Type="DateTime" Precision="3" />
+          <Property Name="Reported_Final" Type="DateTime" Precision="3" />
+          <Property Name="RPT_Status" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="OrderingProvider_ID" Type="Int64" />
+          <Property Name="AttendingProvider_ID" Type="Int64" />
+          <Property Name="Patient_ID" Type="Int64" />
+          <Property Name="IsGratis" Type="Boolean" />
+          <Property Name="BillingType_ID" Type="Int16" />
+          <Property Name="PrimePayer_ID" Type="Int64" />
+          <Property Name="SecondPayer_ID" Type="Int64" />
+          <Property Name="Scrubbed" Type="Boolean" Nullable="false" />
+          <Property Name="Payment_ID" Type="Int64" />
+          <Property Name="Comment" Type="String" MaxLength="960" FixedLength="false" Unicode="true" />
+          <Property Name="WorkCmnt" Type="String" MaxLength="960" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentAmount" Type="Single" />
+          <Property Name="Outreach_Publish" Type="Boolean" Nullable="false" />
+          <Property Name="ProlisOn_Publish" Type="Boolean" Nullable="false" />
+          <Property Name="Fax_Publish" Type="Boolean" Nullable="false" />
+          <Property Name="InHouse" Type="Boolean" Nullable="false" />
+          <Property Name="Director_ID" Type="Int64" />
+          <Property Name="InEditReason" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditedOn" Type="DateTime" Precision="0" />
+          <Property Name="EditedBy" Type="Int64" />
+        </EntityType>
+        <EntityContainer Name="LabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Client_Patient" EntityType="Self.Client_Patient" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Payers" EntityType="Self.Payer" />
+          <EntitySet Name="Requisitions" EntityType="Self.Requisition" />
+          <EntitySet Name="Patients" EntityType="LabaseModel.Patient" />
+          <EntitySet Name="Specimens" EntityType="LabaseModel.Specimen" />
+        </EntityContainer>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="Ethnicity" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Race_ID" Type="Int32" />
+          <Property Name="SSN" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
+          <Property Name="IsAlive" Type="Boolean" />
+          <Property Name="DeathDate" Type="DateTime" Precision="0" />
+          <Property Name="Address_ID" Type="Int64" />
+          <Property Name="HomePhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="WorkPhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SecretQ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SecretA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Cell" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Employer_ID" Type="Int64" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Specimen">
+          <Key>
+            <PropertyRef Name="Accession_ID" />
+            <PropertyRef Name="Source_ID" />
+          </Key>
+          <Property Name="Accession_ID" Type="Int64" Nullable="false" />
+          <Property Name="Source_ID" Type="Int16" Nullable="false" />
+          <Property Name="SourceNo" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SourceQuantity" Type="Single" />
+          <Property Name="SourceDate" Type="DateTime" Precision="3" />
+          <Property Name="SourceTemp" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="IsReadyToUse" Type="Boolean" />
+          <Property Name="Comment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LabaseModelStoreContainer" CdmEntityContainer="LabaseEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="LabaseModel.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client_Patient">
+            <EntityTypeMapping TypeName="LabaseModel.Client_Patient">
+              <MappingFragment StoreEntitySet="Client_Patient">
+                <ScalarProperty Name="Provider_ID" ColumnName="Provider_ID" />
+                <ScalarProperty Name="Patient_ID" ColumnName="Patient_ID" />
+                <ScalarProperty Name="EMRNo" ColumnName="EMRNo" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="ClientUser_ID" ColumnName="ClientUser_ID" />
+                <ScalarProperty Name="AdmitDate" ColumnName="AdmitDate" />
+                <ScalarProperty Name="DischargeDate" ColumnName="DischargeDate" />
+                <ScalarProperty Name="TestDays" ColumnName="TestDays" />
+                <ScalarProperty Name="AttendingProvider_ID" ColumnName="AttendingProvider_ID" />
+                <ScalarProperty Name="BillingType_ID" ColumnName="BillingType_ID" />
+                <ScalarProperty Name="Phleb_Loc" ColumnName="Phleb_Loc" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="LabaseModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="InfiniteTimed" ColumnName="InfiniteTimed" />
+                <ScalarProperty Name="TestDays" ColumnName="TestDays" />
+                <ScalarProperty Name="Agency_ID" ColumnName="Agency_ID" />
+                <ScalarProperty Name="OrderingProvider_ID" ColumnName="OrderingProvider_ID" />
+                <ScalarProperty Name="AttendingProvider_ID" ColumnName="AttendingProvider_ID" />
+                <ScalarProperty Name="BillingType_ID" ColumnName="BillingType_ID" />
+                <ScalarProperty Name="Patient_ID" ColumnName="Patient_ID" />
+                <ScalarProperty Name="EntrySource_ID" ColumnName="EntrySource_ID" />
+                <ScalarProperty Name="Phleb_Loc" ColumnName="Phleb_Loc" />
+                <ScalarProperty Name="WorkCmnt" ColumnName="WorkCmnt" />
+                <ScalarProperty Name="Fasting" ColumnName="Fasting" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="CompleteDate" ColumnName="CompleteDate" />
+                <ScalarProperty Name="LastEdited_On" ColumnName="LastEdited_On" />
+                <ScalarProperty Name="Edited_By" ColumnName="Edited_By" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payers">
+            <EntityTypeMapping TypeName="LabaseModel.Payer">
+              <MappingFragment StoreEntitySet="Payers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FacilityType_ID" ColumnName="FacilityType_ID" />
+                <ScalarProperty Name="PayerName" ColumnName="PayerName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="IsHealthcare" ColumnName="IsHealthcare" />
+                <ScalarProperty Name="DocFile" ColumnName="DocFile" />
+                <ScalarProperty Name="FederalID" ColumnName="FederalID" />
+                <ScalarProperty Name="NPI" ColumnName="NPI" />
+                <ScalarProperty Name="PartNo" ColumnName="PartNo" />
+                <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+                <ScalarProperty Name="ContractFrom" ColumnName="ContractFrom" />
+                <ScalarProperty Name="ContractTo" ColumnName="ContractTo" />
+                <ScalarProperty Name="PayerCode" ColumnName="PayerCode" />
+                <ScalarProperty Name="Address_ID" ColumnName="Address_ID" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="IsPar" ColumnName="IsPar" />
+                <ScalarProperty Name="IsECC" ColumnName="IsECC" />
+                <ScalarProperty Name="CommDLL" ColumnName="CommDLL" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="LastEditedOn" ColumnName="LastEditedOn" />
+                <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requisitions">
+            <EntityTypeMapping TypeName="LabaseModel.Requisition">
+              <MappingFragment StoreEntitySet="Requisitions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RequisitionNo" ColumnName="RequisitionNo" />
+                <ScalarProperty Name="EMRNo" ColumnName="EMRNo" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Verbal" ColumnName="Verbal" />
+                <ScalarProperty Name="AccessionDate" ColumnName="AccessionDate" />
+                <ScalarProperty Name="SpecimenType" ColumnName="SpecimenType" />
+                <ScalarProperty Name="LabDraw" ColumnName="LabDraw" />
+                <ScalarProperty Name="DrawnDate" ColumnName="DrawnDate" />
+                <ScalarProperty Name="SPNote" ColumnName="SPNote" />
+                <ScalarProperty Name="AccessionedBy" ColumnName="AccessionedBy" />
+                <ScalarProperty Name="AccessionLoc_ID" ColumnName="AccessionLoc_ID" />
+                <ScalarProperty Name="AnalysisStage_ID" ColumnName="AnalysisStage_ID" />
+                <ScalarProperty Name="SalesPerson_ID" ColumnName="SalesPerson_ID" />
+                <ScalarProperty Name="Fasting" ColumnName="Fasting" />
+                <ScalarProperty Name="Received" ColumnName="Received" />
+                <ScalarProperty Name="ReceivedTime" ColumnName="ReceivedTime" />
+                <ScalarProperty Name="ResultHistory" ColumnName="ResultHistory" />
+                <ScalarProperty Name="Reported" ColumnName="Reported" />
+                <ScalarProperty Name="ReportedOn" ColumnName="ReportedOn" />
+                <ScalarProperty Name="Reported_Initial" ColumnName="Reported_Initial" />
+                <ScalarProperty Name="Reported_Final" ColumnName="Reported_Final" />
+                <ScalarProperty Name="RPT_Status" ColumnName="RPT_Status" />
+                <ScalarProperty Name="OrderingProvider_ID" ColumnName="OrderingProvider_ID" />
+                <ScalarProperty Name="AttendingProvider_ID" ColumnName="AttendingProvider_ID" />
+                <ScalarProperty Name="Patient_ID" ColumnName="Patient_ID" />
+                <ScalarProperty Name="IsGratis" ColumnName="IsGratis" />
+                <ScalarProperty Name="BillingType_ID" ColumnName="BillingType_ID" />
+                <ScalarProperty Name="PrimePayer_ID" ColumnName="PrimePayer_ID" />
+                <ScalarProperty Name="SecondPayer_ID" ColumnName="SecondPayer_ID" />
+                <ScalarProperty Name="Scrubbed" ColumnName="Scrubbed" />
+                <ScalarProperty Name="Payment_ID" ColumnName="Payment_ID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="WorkCmnt" ColumnName="WorkCmnt" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="Outreach_Publish" ColumnName="Outreach_Publish" />
+                <ScalarProperty Name="ProlisOn_Publish" ColumnName="ProlisOn_Publish" />
+                <ScalarProperty Name="Fax_Publish" ColumnName="Fax_Publish" />
+                <ScalarProperty Name="InHouse" ColumnName="InHouse" />
+                <ScalarProperty Name="Director_ID" ColumnName="Director_ID" />
+                <ScalarProperty Name="InEditReason" ColumnName="InEditReason" />
+                <ScalarProperty Name="LastEditedOn" ColumnName="LastEditedOn" />
+                <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="LabaseModel.Patient">
+              <MappingFragment StoreEntitySet="Patients">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Employer_ID" ColumnName="Employer_ID" />
+                <ScalarProperty Name="Cell" ColumnName="Cell" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="SecretA" ColumnName="SecretA" />
+                <ScalarProperty Name="SecretQ" ColumnName="SecretQ" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WorkPhone" ColumnName="WorkPhone" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="Address_ID" ColumnName="Address_ID" />
+                <ScalarProperty Name="DeathDate" ColumnName="DeathDate" />
+                <ScalarProperty Name="IsAlive" ColumnName="IsAlive" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="Race_ID" ColumnName="Race_ID" />
+                <ScalarProperty Name="Ethnicity" ColumnName="Ethnicity" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specimens">
+            <EntityTypeMapping TypeName="LabaseModel.Specimen">
+              <MappingFragment StoreEntitySet="Specimens">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="IsReadyToUse" ColumnName="IsReadyToUse" />
+                <ScalarProperty Name="SourceTemp" ColumnName="SourceTemp" />
+                <ScalarProperty Name="SourceDate" ColumnName="SourceDate" />
+                <ScalarProperty Name="SourceQuantity" ColumnName="SourceQuantity" />
+                <ScalarProperty Name="SourceNo" ColumnName="SourceNo" />
+                <ScalarProperty Name="Source_ID" ColumnName="Source_ID" />
+                <ScalarProperty Name="Accession_ID" ColumnName="Accession_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

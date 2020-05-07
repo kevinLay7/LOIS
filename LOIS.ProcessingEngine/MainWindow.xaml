@@ -1,0 +1,24 @@
+﻿<Window x:Class="LOIS.ProcessingEngine.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LOIS.ProcessingEngine"
+             xmlns:nlog ="ctrl-namespace:NlogViewer;assembly=NlogViewer
+             xmlns:nlog1="
+             xmlns:nlog1="clr-namespace:NlogViewer;assembly=NlogViewer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="79*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="StartButton" Content="Start" Margin="0,21,115,0" VerticalAlignment="Top" Click="StartButton_Click" Height="20" HorizontalAlignment="Right" Width="75"/>
+        <Button x:Name="StopButton" Content="Stop" Margin="0,21,19,0" VerticalAlignment="Top" Click="StopButton_Click" Height="20" HorizontalAlignment="Right" Width="75"/>
+        <GroupBox Grid.Row="1">
+            <nlog1:NlogViewer x:Name="logCtrl" TimeWidth="AUTO" LevelWidth="Auto" MessageWidth="Auto" />
+        </GroupBox>
+        <Button Content="Config" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    </Grid>
+</Window>

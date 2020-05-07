@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="loisModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Authentication">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" />
+          <Property Name="LastName" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
+          <Property Name="Admin" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar(max)" />
+          <Property Name="Salt" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="AuthenticationGroups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthGroupUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="SSN" Type="int" />
+          <Property Name="Address" Type="varchar" MaxLength="255" />
+          <Property Name="Dob" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Requisition">
+          <Key>
+            <PropertyRef Name="RequisitionNo" />
+          </Key>
+          <Property Name="RequisitionNo" Type="int" Nullable="false" />
+          <Property Name="EmrNo" Type="varchar" MaxLength="100" />
+          <Property Name="AccessionDate" Type="datetime" />
+          <Property Name="SpecimineType" Type="int" />
+          <Property Name="ReceivedDate" Type="datetime" />
+          <Property Name="PatientId" Type="int" />
+          <Property Name="PrimePayerId" Type="int" />
+          <Property Name="SecondaryPayerId" Type="int" />
+          <Property Name="ProviderId" Type="int" />
+          <Property Name="ProviderName" Type="varchar" MaxLength="100" />
+          <Property Name="CollectedDate" Type="datetime" />
+          <Property Name="ScannedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RequisitionDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequisitionId" Type="int" />
+          <Property Name="Document" Type="varbinary(max)" />
+          <Property Name="MarkedDeleted" Type="bit" Nullable="false" />
+          <Property Name="MarkedDeletedUser" Type="varchar" MaxLength="50" />
+          <Property Name="MarkedDeletedDate" Type="datetime" />
+          <Property Name="DocumentHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AuthToken" Type="varchar(max)" />
+          <Property Name="IssuedOn" Type="datetime" />
+          <Property Name="ExpiresOn" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_AuthGroupUsers_Authentication">
+          <End Role="Authentication" Type="Self.Authentication" Multiplicity="1" />
+          <End Role="AuthGroupUsers" Type="Self.AuthGroupUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authentication">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AuthGroupUsers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthGroupUsers_AuthenticationGroups">
+          <End Role="AuthenticationGroups" Type="Self.AuthenticationGroups" Multiplicity="1" />
+          <End Role="AuthGroupUsers" Type="Self.AuthGroupUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthenticationGroups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AuthGroupUsers">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="loisModel1StoreContainer">
+          <EntitySet Name="Authentication" EntityType="Self.Authentication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthenticationGroups" EntityType="Self.AuthenticationGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthGroupUsers" EntityType="Self.AuthGroupUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requisition" EntityType="Self.Requisition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequisitionDocument" EntityType="Self.RequisitionDocument" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AuthGroupUsers_Authentication" Association="Self.FK_AuthGroupUsers_Authentication">
+            <End Role="Authentication" EntitySet="Authentication" />
+            <End Role="AuthGroupUsers" EntitySet="AuthGroupUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthGroupUsers_AuthenticationGroups" Association="Self.FK_AuthGroupUsers_AuthenticationGroups">
+            <End Role="AuthenticationGroups" EntitySet="AuthenticationGroups" />
+            <End Role="AuthGroupUsers" EntitySet="AuthGroupUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="loisModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Authentication">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="Admin" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AuthGroupUsers" Relationship="loisModel1.FK_AuthGroupUsers_Authentication" FromRole="Authentication" ToRole="AuthGroupUser" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SSN" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Dob" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="RequisitionDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequisitionId" Type="Int32" />
+          <Property Name="Document" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MarkedDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="MarkedDeletedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MarkedDeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="DocumentHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AuthToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IssuedOn" Type="DateTime" Precision="3" />
+          <Property Name="ExpiresOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="loisEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authentications" EntityType="Self.Authentication" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="RequisitionDocuments" EntityType="Self.RequisitionDocument" />
+          <EntitySet Name="Tokens" EntityType="Self.Token" />
+          <EntitySet Name="Requisitions" EntityType="loisModel1.Requisition" />
+          <EntitySet Name="AuthenticationGroups" EntityType="loisModel1.AuthenticationGroup" />
+          <EntitySet Name="AuthGroupUsers" EntityType="loisModel1.AuthGroupUser" />
+          <EntitySet Name="sysdiagrams" EntityType="loisModel1.sysdiagram" />
+          <AssociationSet Name="FK_AuthGroupUsers_Authentication" Association="loisModel1.FK_AuthGroupUsers_Authentication">
+            <End Role="Authentication" EntitySet="Authentications" />
+            <End Role="AuthGroupUser" EntitySet="AuthGroupUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthGroupUsers_AuthenticationGroups" Association="loisModel1.FK_AuthGroupUsers_AuthenticationGroups">
+            <End Role="AuthenticationGroup" EntitySet="AuthenticationGroups" />
+            <End Role="AuthGroupUser" EntitySet="AuthGroupUsers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Requisition">
+          <Key>
+            <PropertyRef Name="RequisitionNo" />
+          </Key>
+          <Property Name="RequisitionNo" Type="Int32" Nullable="false" />
+          <Property Name="EmrNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AccessionDate" Type="DateTime" Precision="3" />
+          <Property Name="SpecimineType" Type="Int32" />
+          <Property Name="ReceivedDate" Type="DateTime" Precision="3" />
+          <Property Name="PatientId" Type="Int32" />
+          <Property Name="PrimePayerId" Type="Int32" />
+          <Property Name="SecondaryPayerId" Type="Int32" />
+          <Property Name="ProviderId" Type="Int32" />
+          <Property Name="ProviderName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CollectedDate" Type="DateTime" Precision="3" />
+          <Property Name="ScannedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="AuthenticationGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AuthGroupUsers" Relationship="loisModel1.FK_AuthGroupUsers_AuthenticationGroups" FromRole="AuthenticationGroup" ToRole="AuthGroupUser" />
+        </EntityType>
+        <EntityType Name="AuthGroupUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Authentication" Relationship="loisModel1.FK_AuthGroupUsers_Authentication" FromRole="AuthGroupUser" ToRole="Authentication" />
+          <NavigationProperty Name="AuthenticationGroup" Relationship="loisModel1.FK_AuthGroupUsers_AuthenticationGroups" FromRole="AuthGroupUser" ToRole="AuthenticationGroup" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_AuthGroupUsers_Authentication">
+          <End Type="loisModel1.Authentication" Role="Authentication" Multiplicity="1" />
+          <End Type="loisModel1.AuthGroupUser" Role="AuthGroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authentication">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AuthGroupUser">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthGroupUsers_AuthenticationGroups">
+          <End Type="loisModel1.AuthenticationGroup" Role="AuthenticationGroup" Multiplicity="1" />
+          <End Type="loisModel1.AuthGroupUser" Role="AuthGroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AuthenticationGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AuthGroupUser">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="loisModel1StoreContainer" CdmEntityContainer="loisEntities1">
+          <EntitySetMapping Name="Authentications">
+            <EntityTypeMapping TypeName="loisModel1.Authentication">
+              <MappingFragment StoreEntitySet="Authentication">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="loisModel1.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequisitionDocuments">
+            <EntityTypeMapping TypeName="loisModel1.RequisitionDocument">
+              <MappingFragment StoreEntitySet="RequisitionDocument">
+                <ScalarProperty Name="DocumentHash" ColumnName="DocumentHash" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RequisitionId" ColumnName="RequisitionId" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="MarkedDeleted" ColumnName="MarkedDeleted" />
+                <ScalarProperty Name="MarkedDeletedUser" ColumnName="MarkedDeletedUser" />
+                <ScalarProperty Name="MarkedDeletedDate" ColumnName="MarkedDeletedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="loisModel1.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AuthToken" ColumnName="AuthToken" />
+                <ScalarProperty Name="IssuedOn" ColumnName="IssuedOn" />
+                <ScalarProperty Name="ExpiresOn" ColumnName="ExpiresOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requisitions">
+            <EntityTypeMapping TypeName="loisModel1.Requisition">
+              <MappingFragment StoreEntitySet="Requisition">
+                <ScalarProperty Name="ScannedDate" ColumnName="ScannedDate" />
+                <ScalarProperty Name="CollectedDate" ColumnName="CollectedDate" />
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+                <ScalarProperty Name="SecondaryPayerId" ColumnName="SecondaryPayerId" />
+                <ScalarProperty Name="PrimePayerId" ColumnName="PrimePayerId" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="SpecimineType" ColumnName="SpecimineType" />
+                <ScalarProperty Name="AccessionDate" ColumnName="AccessionDate" />
+                <ScalarProperty Name="EmrNo" ColumnName="EmrNo" />
+                <ScalarProperty Name="RequisitionNo" ColumnName="RequisitionNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthenticationGroups">
+            <EntityTypeMapping TypeName="loisModel1.AuthenticationGroup">
+              <MappingFragment StoreEntitySet="AuthenticationGroups">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthGroupUsers">
+            <EntityTypeMapping TypeName="loisModel1.AuthGroupUser">
+              <MappingFragment StoreEntitySet="AuthGroupUsers">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="loisModel1.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

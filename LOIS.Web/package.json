@@ -17,7 +17,7 @@
     "fontawesome": "^4.7.2",
     "jquery": "^3.3.1",
     "js-cookies": "^1.0.4",
-    "moment": "^2.21.0",
+    "moment": "^2.29.4",
     "popper.js": "^1.14.0",
     "postcss-loader": "^2.1.1",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
